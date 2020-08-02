@@ -1,0 +1,16 @@
+[package]
+name = "mcfind"
+version = "0.1.0"
+authors = ["Amandus Søve Thorsrud <ama.thorsrud@gmail.com>"]
+edition = "2018"
+
+[features]
+default = ["cli"]
+cli = []
+
+[[bin]]
+name = "mcfind"
+required-features = ["cli"]
+
+[dependencies]
+thiserror = "1.0.20"
