@@ -1,8 +1,8 @@
-use crate::{slime, world::PlayerPos};
+use mcfind::{slime, world::PlayerPos};
 use std::num::ParseIntError;
 use thiserror::Error;
 
-pub fn run() -> Result<(), CliError> {
+pub fn run() -> Result<(), Error> {
     let command = Command::create_from_args()?;
     command.execute();
 
@@ -18,7 +18,7 @@ usage: mcfind <command> [<args>]
 }
 
 #[derive(Error, Debug)]
-pub enum CliError {
+pub enum Error {
     #[error("no command specified")]
     NoCommand,
     #[error("missing argument `{0}`")]
@@ -36,7 +36,7 @@ enum Command {
 }
 
 impl Command {
-    fn create_from_args() -> Result<Command, CliError> {
+    fn create_from_args() -> Result<Command, Error> {
         let mut args = std::env::args();
         args.next();
 
@@ -45,17 +45,17 @@ impl Command {
                 let seed = args
                     .next()
                     .map(|s| s.parse())
-                    .ok_or(CliError::MissingArgumentError("seed"))??;
+                    .ok_or(Error::MissingArgumentError("seed"))??;
 
                 let x = args
                     .next()
                     .map(|s| s.parse())
-                    .ok_or(CliError::MissingArgumentError("x"))??;
+                    .ok_or(Error::MissingArgumentError("x"))??;
 
                 let z = args
                     .next()
                     .map(|s| s.parse())
-                    .ok_or(CliError::MissingArgumentError("z"))??;
+                    .ok_or(Error::MissingArgumentError("z"))??;
 
                 let radius = args.next().map(|s| s.parse()).transpose().unwrap_or(None);
 
@@ -65,7 +65,7 @@ impl Command {
                     radius,
                 })
             }
-            _ => Err(CliError::NoCommand),
+            _ => Err(Error::NoCommand),
         }
     }
 
