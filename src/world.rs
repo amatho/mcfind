@@ -15,7 +15,7 @@ impl From<i64> for Seed {
     }
 }
 
-#[derive(Debug, Default, Copy, Clone)]
+#[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub struct Chunk {
     pub x: i32,
     pub z: i32,

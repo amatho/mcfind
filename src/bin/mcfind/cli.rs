@@ -71,14 +71,20 @@ impl Command {
 
     fn execute(self) {
         match self {
-            Command::Slime { seed, pos, radius } => slime::nearby_slimes(
-                seed,
-                pos,
-                radius.unwrap_or_else(|| {
-                    println!("Info: using default radius 2\n");
-                    2
-                }),
-            ),
+            Command::Slime { seed, pos, radius } => {
+                let chunks = slime::nearby_slimes(
+                    seed,
+                    pos,
+                    radius.unwrap_or_else(|| {
+                        println!("Info: using default radius 2\n");
+                        2
+                    }),
+                );
+
+                for chunk in chunks {
+                    println!("Slime chunk from {}", chunk.display_world_coords());
+                }
+            }
         }
     }
 }
