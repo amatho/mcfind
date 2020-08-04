@@ -1,14 +1,9 @@
 use crate::{
     random::JavaRandom,
-    world::{Chunk, PlayerPos, Seed},
+    world::{Chunk, PlayerPos},
 };
 
-pub fn nearby_slimes<T: Into<Seed>>(
-    seed: T,
-    player_pos: PlayerPos,
-    chunk_radius: u32,
-) -> Vec<Chunk> {
-    let seed = seed.into();
+pub fn nearby_slimes(seed: i64, player_pos: PlayerPos, chunk_radius: u32) -> Vec<Chunk> {
     let radius = chunk_radius as i32;
 
     let chunk_x = player_pos.x / 16;
@@ -29,17 +24,17 @@ pub fn nearby_slimes<T: Into<Seed>>(
     slime_chunks
 }
 
-pub fn is_slime_chunk<T: Into<Seed>>(seed: T, chunk: Chunk) -> bool {
-    let mut rnd = create_slime_random(seed.into(), chunk);
+pub fn is_slime_chunk(seed: i64, chunk: Chunk) -> bool {
+    let mut rnd = create_slime_random(seed, chunk);
     rnd.next_i32_bound(10) == 0
 }
 
-fn create_slime_random(seed: Seed, chunk: Chunk) -> JavaRandom {
+fn create_slime_random(seed: i64, chunk: Chunk) -> JavaRandom {
     let x = chunk.x;
     let z = chunk.z;
 
     JavaRandom::new(
-        (seed.0
+        (seed
             + x.wrapping_mul(x).wrapping_mul(0x4c1906) as i64
             + x.wrapping_mul(0x5ac0db) as i64
             + z.wrapping_mul(z).wrapping_mul(0x4307a7) as i64

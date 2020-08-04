@@ -1,20 +1,5 @@
 use std::fmt::Display;
 
-#[derive(Debug, Copy, Clone)]
-pub struct Seed(pub(crate) i64);
-
-impl Seed {
-    pub fn new(seed: i64) -> Seed {
-        Seed(seed)
-    }
-}
-
-impl From<i64> for Seed {
-    fn from(val: i64) -> Self {
-        Seed(val)
-    }
-}
-
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]
 pub struct Chunk {
     pub x: i32,
